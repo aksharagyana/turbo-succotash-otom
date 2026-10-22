@@ -248,6 +248,55 @@ count by (instance, version) (prometheus_build_info)
 
 This requires Prometheus self-scraping. Alternatively, open /api/v1/status/buildinfo on the server. In an aggregated data source, build metrics may describe upstream scraped servers.
 
+```promql
+sum by (namespace, pod) (
+  increase(kube_pod_container_status_restarts_total[1h])
+) > 0
+```
+
+```promql
+kube_pod_container_status_waiting_reason{
+  reason="CrashLoopBackOff"
+} == 1
+```
+
+```promql
+kube_pod_container_status_last_terminated_reason{
+  reason="OOMKilled"
+} == 1
+```
+
+```promql
+sum by (namespace) (
+  rate(pod_cpu_usage_seconds_total{pod!=""}[5m])
+)  
+```
+
+```promql
+sum(
+  rate(pod_cpu_usage_seconds_total{pod!=""}[5m])
+)
+```
+
+```promql
+sum by (namespace) (
+  pod_memory_working_set_bytes{pod!=""}
+) / 1024 / 1024 / 1024
+```
+
+```promql
+sum(
+  pod_memory_working_set_bytes{pod!=""}
+) / 1024 / 1024 / 1024
+```
+
+```promql
+count by (__name__) (
+  {__name__=~"pod_(cpu|memory)_.*"}
+)
+```
+
+
 ## References
 
 - [PromQL basics](https://prometheus.io/docs/prometheus/latest/querying/basics/)
