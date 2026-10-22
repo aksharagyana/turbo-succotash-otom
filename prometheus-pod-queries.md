@@ -302,6 +302,17 @@ count by (__name__) (
 )
 ```
 
+```promql
+process_cpu_usage
+```
+
+
+```promql
+max by (namespace, pod) (
+  process_cpu_usage
+) * 100
+```
+
 ## References
 
 - [PromQL basics](https://prometheus.io/docs/prometheus/latest/querying/basics/)
