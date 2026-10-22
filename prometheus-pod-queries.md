@@ -296,6 +296,11 @@ count by (__name__) (
 )
 ```
 
+```promql
+count by (__name__) (
+  {__name__=~".*(cpu_usage|memory_working_set|memory_usage).*"}
+)
+```
 
 ## References
 
