@@ -313,6 +313,31 @@ max by (namespace, pod) (
 ) * 100
 ```
 
+```promql
+count by (__name__) (
+  {__name__=~"(jvm_memory_.*|process_resident_memory_.*|process_virtual_memory_.*)"}
+)
+```
+
+
+```promql
+sum by (namespace, pod, instance) (
+  jvm_memory_used_bytes{area="heap"}
+) / 1024 / 1024
+```
+
+
+```promql
+sum by (namespace, pod, instance) (
+  jvm_memory_used_bytes{area="nonheap"}
+) / 1024 / 1024
+```
+
+
+```promql
+process_resident_memory_bytes / 1024 / 1024
+```
+
 ## References
 
 - [PromQL basics](https://prometheus.io/docs/prometheus/latest/querying/basics/)
